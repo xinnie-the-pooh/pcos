@@ -3,14 +3,14 @@ void edit(void){
 }
 void pps(){
    if ((byte)Str[3] == 'S' && (byte)Str[4] == 'H' && (byte)Str[5] == 'O' && (byte)Str[6] == 'W') {
-    if ((byte)Str[7] == ""){
-     Serial.println(ser0);
+
+     Serial.print(ser0);
      Serial.print(ser1);
     Serial.print(ser1);
-    }
-    else if ((byte)Str[7] == '?'){
+     Serial.println("");
+   
       Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");
-    }
+    
    }
    
 }
@@ -42,12 +42,7 @@ void rst(void) {
     resetFunc();
   }
 }
-void help(void) {
-  if ((byte)Str[0] == 'H' && (byte)Str[1] == 'E' && (byte)Str[2] == 'L' && (byte)Str[3] == 'P')
-  {
-    Serial.println("HELP> NOT READY YET ");
-  }
-}
+
 void uart(void) {
   if ((byte)Str[3] == 'U' && (byte)Str[4] == 'A' && (byte)Str[5] == 'R' && (byte)Str[6] == 'T') {
     if ((byte)Str[7] == '=') {
