@@ -11,13 +11,15 @@ void ask(int detime) {
   if (detime == 1) {
     delay(ser1 * 100 + ser2 * 10);
     Serial.print(ser1);
-    Serial.println(ser2);
+    Serial.print(ser2);
+    
   }
   else {
     Serial.print(ser1);
     Serial.print(ser2);
 
   }
+  
 }
 
 void nod(String& Str) {

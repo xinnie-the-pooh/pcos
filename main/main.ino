@@ -48,6 +48,7 @@ void loop(void)
     if (acmode == 0) {
       at();
       ac();
+      ch();
       help();
 
     }
