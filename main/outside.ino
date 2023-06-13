@@ -9,13 +9,14 @@ void at(void) {
       Serial.println("AT>HELP> 'AT+UART=[N]' IS UART SETTING TOOLS,NUMBER MEAN:300*2^N ");
       Serial.println("AT>HELP> 'AT+RST' IS REBOOT COMMAND ");
     }
-    else Serial.println("AT> COMMAND FORMAT ERROR: INSERT 'AT?' TO LEARN MORE");
   }
 }
 
 
 void ac() {
   if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
+
+    
     Serial.println("AC MODE ON");
     ask(1);
     acmode = 1;
