@@ -64,6 +64,9 @@ void ins(void) {
 void help(void) {
   if ((byte)Str[0] == 'H' && (byte)Str[1] == 'E' && (byte)Str[2] == 'L' && (byte)Str[3] == 'P')
   {
-    Serial.println("HELP> NOT READY YET ");
+//    if (acmode==0) 
+Serial.println("AT+UART ; AT+RST ; []+AC ; ? ; AC");
+//    else 
+Serial.println("[]? ; []+RST ; []+EXIT ; []+SHOW");
   }
 }

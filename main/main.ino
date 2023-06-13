@@ -55,6 +55,7 @@ void loop(void)
     else if (acmode == 1)
     {
       ins();
+//      help();
     }
 
        
