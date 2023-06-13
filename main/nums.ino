@@ -30,7 +30,7 @@ void nod(String& Str) {
 
 void sp(void) {
   Serial.println("");
-  Serial.println("AT COMMAND PROMPT V1.3");
+  Serial.println("USE 'HELP' TO LEARN MORE");
   Serial.println(speed);
   Serial.println("LOAD UART PROFILE FINISHED");
 }
