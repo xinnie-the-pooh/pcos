@@ -31,8 +31,6 @@ void nod(String& Str) {
 void sp(void) {
   Serial.println("");
   Serial.println("USE 'HELP' TO LEARN MORE");
-  Serial.println(speed);
+  Serial.println(sped);
   Serial.println("LOAD UART PROFILE FINISHED");
 }
-
-void(* resetFunc) (void) = 0;
