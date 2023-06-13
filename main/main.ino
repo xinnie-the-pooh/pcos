@@ -177,9 +177,7 @@ atmode:
   delay(100); // 延时 100 毫秒
 }
 
-int ascii(int pic){
-  return pic+48;
-}
+
 
 void ask(int detime){
   if (detime==1){
