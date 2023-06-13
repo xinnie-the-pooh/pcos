@@ -6,7 +6,7 @@ void pps(){
 
      Serial.print(ser0);
      Serial.print(ser1);
-    Serial.print(ser1);
+    Serial.print(ser2);
      Serial.println("");
    
       Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");
