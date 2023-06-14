@@ -49,9 +49,7 @@ void uart(void) {
 
       if ((byte)Str[8] != "") {
        nm=ascii((byte)Str[8]);
-       // sped = btm *pow(2,nm); //'0'=300,'1'=600 ,'2'=1200 '4'=2400
-
-        
+       // sped = btm *pow(2,nm); //'0'=300,'1'=600 ,'2'=1200 '4'=2400   
       }
 
       Serial.println("SETTING UART SPEED DONE");
