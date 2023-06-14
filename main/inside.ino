@@ -48,11 +48,14 @@ void uart(void) {
     if ((byte)Str[7] == '=') {
 
       if ((byte)Str[8] != "") {
-        sped = btm * sqrt(ascii((byte)Str[8])); //'0'=0,'1'=btm ,'2'=4btm '4'=16btm
+       nm=ascii((byte)Str[8]);
+       // sped = btm *pow(2,nm); //'0'=300,'1'=600 ,'2'=1200 '4'=2400
+
+        
       }
 
       Serial.println("SETTING UART SPEED DONE");
-      EEPROM.write(0, sped / btm);
+      EEPROM.write(0, nm);
     }
 
 

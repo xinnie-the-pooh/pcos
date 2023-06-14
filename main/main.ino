@@ -1,34 +1,29 @@
-
-
-// Define User Types below here or use a .h file
-//
-
+#define btm 300
 #include <EEPROM.h>
 String Str;
-
-// Define Function Prototypes that use User Types below here or use a .h file
-//
-int btm = 300;
 int mul_1 = 1;
 int mul_2 = 2;
 int at_flag = 0;
 int sped = 9600; //defalut
 int config = SERIAL_8N1;
-int ser0;
+int ser0;//read
 int ser1;
 int ser2;
 int acmode;
 //int editmode;
-
+int nm;//write
 void(* resetFunc) (void) = 0;
 
 void setup(void)
 {
   acmode = 0;
 //  editmode = 0;
+
+
+ ser0 = EEPROM.read(0);
   ser1 = EEPROM.read(1);
   ser2 = EEPROM.read(2);
-  //speed=EEPROM.read(0)*btm;
+  
 
   Serial.begin(sped);
   delay(1000);
