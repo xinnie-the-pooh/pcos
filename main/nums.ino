@@ -1,25 +1,15 @@
-int ascii(int pic) {
+byte ascii(byte pic) {
   return pic + 48;
 }
 
-int unascii(int tok) {
+byte unascii(byte tok) {
   return tok - 48;
 }
 
-
 void ask(int detime) {
-  if (detime == 1) {
-    delay(ser1 * 100 + ser2 * 10);
+  if (detime == 1)     delay(ser1 * 100 + ser2 * 10);
     Serial.print(ser1);
     Serial.print(ser2);
-    
-  }
-  else {
-    Serial.print(ser1);
-    Serial.print(ser2);
-
-  }
-  
 }
 
 void nod(String& Str) {
@@ -32,7 +22,7 @@ void nod(String& Str) {
 
 void sp(void) {
   Serial.println("");
-  Serial.println("USE 'HELP' TO LEARN MORE");
+  Serial.println("USE 'HELP' FOR MORE");
   Serial.println(sped);
-  Serial.println("LOAD UART PROFILE FINISHED");
+  Serial.println("LOAD PROFILE DONE");
 }
