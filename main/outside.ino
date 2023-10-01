@@ -1,6 +1,7 @@
 void at(void) {
   if ((byte)Str[0] == 'A' && (byte)Str[1] == 'T') {
     if ((byte)Str[2] == '+') {
+      pps();
       uart();
       rst();
      }
