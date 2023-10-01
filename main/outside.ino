@@ -37,6 +37,7 @@ void ins(void) {
       rst();
       uart();
       re();
+      d();
     }
   }
 }

@@ -74,3 +74,18 @@ void uart(void) {
     
   }
 }
+void d(void) {
+  if ( (byte)Str[3] == 'D'  && (byte)Str[4] != ""&& (byte)Str[5]!= "" ) {
+   if ((byte)Str[6]== 'E')  {
+   digitalWrite((unascii((byte)Str[4])*10+unascii((byte)Str[5])),1);
+
+   }
+    if ((byte)Str[6]== 'F')  {
+    digitalWrite((unascii((byte)Str[4])*10+unascii((byte)Str[5])),0);
+    }
+      
+     if ((byte)Str[6]== "") {
+    
+       
+ 
+  }}}

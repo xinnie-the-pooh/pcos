@@ -31,7 +31,10 @@ void setup(void)
   }
  else Serial.println("AC MODE FAILED");
  delay(1000);
- 
+
+
+
+ pinMode(13,1);
 }
 
 // Add the main program code into the continuous loop() function
