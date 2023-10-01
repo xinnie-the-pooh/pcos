@@ -4,7 +4,7 @@ String Str;
 //byte mul_1 = 1;
 //byte mul_2 = 2;
 //byte at_flag = 0;
-byte sped = 9600; //defalut
+int sped = 9600; //defalut
 //int config = SERIAL_8N1;
 byte ser0;//read
 byte ser1;
