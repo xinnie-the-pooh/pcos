@@ -12,21 +12,15 @@ void at(void) {
   }
 }
 
-void ac(void) {
-  if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
-    ask(1);
-    Serial.println("AC MODE ON");
-    acmode = 1;
-  }
-}
+//void ac(void) {
+//  if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
+//    ask(1);
+//    Serial.println("AC MODE ON");
+//    acmode = 1;
+//  }
+//}
 
-void ch(void) {
-  if ((byte)Str[0] == ascii(ser1) && (byte)Str[1] == ascii(ser2) && (byte)Str[2] == '+'  && (byte)Str[3] == 'A'  &&  (byte)Str[4] == 'C') {
-    ask(0);
-    Serial.println("AC MODE ON");
-    acmode = 1;
-  }
-}
+
 
 void ins(void) {
   if ((byte)Str[0] == '?') {

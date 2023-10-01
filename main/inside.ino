@@ -3,10 +3,7 @@
 //}
 void pps(){
    if ((byte)Str[3] == 'S' && (byte)Str[4] == 'H' && (byte)Str[5] == 'O' && (byte)Str[6] == 'W') {
-     Serial.print(ser0);
-     Serial.print(ser1);
-    Serial.print(ser2);
-     Serial.println("");
+     Serial.print(ser0);Serial.print(";"); Serial.print(ser1);Serial.print(";"); Serial.print(ser2);Serial.println(";");
      Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW"); 
    }
 }
@@ -47,7 +44,18 @@ void re(void){
   Serial.println("RELOAD DONE");
    }
 }
-
+void ch(void) {
+  if ( (byte)Str[3] == 'A'  &&  (byte)Str[4] == 'C'&&(byte)Str[5] == '='&& (byte)Str[6] != ""&& (byte)Str[7] != ""&&ser1==255&&ser2==255) {
+  
+      int p1=unascii((byte)Str[6]);
+        EEPROM.write(1, p1);
+      int  p2=unascii((byte)Str[7]);
+       EEPROM.write(2, p2);
+        Serial.print(p1);Serial.print(p2); Serial.println(" AC MODE ON");
+    acmode = 1;
+ 
+  }
+}
 void uart(void) {
   if ((byte)Str[3] == 'U' && (byte)Str[4] == 'A' && (byte)Str[5] == 'R' && (byte)Str[6] == 'T') {
     if ((byte)Str[7] == '=') {
@@ -62,9 +70,7 @@ void uart(void) {
 
 
 
-     if ((byte)Str[7] == "?"){
-         Serial.println(sped);
-    }
-
+     else         Serial.println(sped);
+    
   }
 }

@@ -20,9 +20,18 @@ void setup(void)
  ser0 = EEPROM.read(0);
   ser1 = EEPROM.read(1);
   ser2 = EEPROM.read(2);
+  
+  if (ser0!=255) sped=btm *pow(2,ser0);//存储器非空装入波特率
  Serial.begin(sped); 
+ Serial.print("LOAD UART PROFILE DONE @"); Serial.println(sped);
+  if (ser1!=255&&ser2!=255){
+    Serial.print(ser1);Serial.print(ser2);
+    Serial.println(" : AC MODE ON");
+    acmode = 1;
+  }
+ else Serial.println("AC MODE FAILED");
  delay(1000);
-  sp();
+ 
 }
 
 // Add the main program code into the continuous loop() function
@@ -34,7 +43,7 @@ void loop(void)
     Serial.println(Str);
     if (acmode == 0) {
       at();
-      ac();
+//      ac();
       ch();
       help();
     }

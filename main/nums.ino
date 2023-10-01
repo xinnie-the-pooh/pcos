@@ -23,6 +23,5 @@ void nod(String& Str) {
 void sp(void) {
   Serial.println("");
   Serial.println("USE 'HELP' FOR MORE");
-  Serial.println(sped);
-  Serial.println("LOAD PROFILE DONE");
+ 
 }
