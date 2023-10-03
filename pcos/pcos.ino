@@ -24,7 +24,7 @@ byte acmode;
 byte nm;//write
 void(* resetFunc) (void) = 0;
 void setup(void)
-{   
+{
 	if (ser1!=255&&ser2!=255)newflag=1;
 	acmode = 0;
 	//  editmode = 0;
@@ -38,14 +38,14 @@ void setup(void)
 	Serial.print("LOAD UART PROFILE DONE @"); Serial.println(sped);
 	
 	if(newflag==1){//读取机器码
-	ack();
-	Serial.println(" : AC MODE ON");
-	acmode = 1;
-	for (int p=0;p<=dpinsnum;p++)
-	{
-		pinMode(p,EEPROM.read(p+20));//引脚配置方法 从20-100
-	}
-	
+		ack();
+		Serial.println(" : AC MODE ON");
+		acmode = 1;
+		for (int p=0;p<=dpinsnum;p++)
+		{
+			pinMode(p,EEPROM.read(p+20));//引脚配置方法 从20-100
+		}
+		
 	}
 	
 	else Serial.println("AC MODE FAILED");
@@ -76,18 +76,15 @@ void loop(void)
 	delay(100); // 延时 100 毫秒
 }
 //有响应内部命令
-
 //show
 void pps(void){
 	if ((byte)Str[3] == 'S' && (byte)Str[4] == 'H' && (byte)Str[5] == 'O' && (byte)Str[6] == 'W') {
 		ack();
 		Serial.print(ser0);Serial.print(";"); Serial.print(ser1);Serial.print(";"); Serial.print(ser2);Serial.println(";");
-	/*	Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");*/
+		/*	Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");*/
 		
 	}
 }
-
-
 // 	void ex(void){
 //
 // 		if ((byte)Str[3] == 'E' && (byte)Str[4] == 'X' && (byte)Str[5] == 'I' && (byte)Str[6] == 'T') {
@@ -109,7 +106,6 @@ void pps(void){
 // 		}
 // 	}
 // }
-
 //rst
 void rst(void) {
 	if ((byte)Str[3] == 'R' && (byte)Str[4] == 'S' && (byte)Str[5] == 'T') {
@@ -118,7 +114,6 @@ void rst(void) {
 		resetFunc();
 	}
 }
-
 // void re(void){
 // 	if ((byte)Str[3] == 'R' && (byte)Str[4] == 'E') {
 // 		ser0 = EEPROM.read(0);
@@ -127,18 +122,15 @@ void rst(void) {
 // 		Serial.println("RELOAD DONE");
 // 	}
 // }
-
 //ac
 void ch(void) {
 	if ( (byte)Str[3] == 'A'  &&  (byte)Str[4] == 'C'&&(byte)Str[5] == '='&& (byte)Str[6] != ""&& (byte)Str[7] != ""&&ser1==255&&ser2==255) {
-		
 		int p1=unascii((byte)Str[6]);
 		EEPROM.write(1, p1);
 		int  p2=unascii((byte)Str[7]);
 		EEPROM.write(2, p2);
 		Serial.print(p1);Serial.print(p2); Serial.println(" AC MODE ON");
 		acmode = 1;
-		
 	}
 }
 //uart
@@ -153,23 +145,19 @@ void uart(void) {
 			Serial.println(" SETTING UART SPEED DONE");
 			EEPROM.write(0, nm);
 		}
-
-
-
 		else         Serial.println(sped);
-		
 	}
 }
 //无响应内部命令
 void ack(void){//统计响应次数及相应顺延
-if (newflag == 1)   {  
-	delay(ser1 * 100 + ser2 * 10);
-	Serial.print(ser1);Serial.print(ser2);Serial.print(":");
-	count++;
+	if (newflag == 1)   {
+		delay(ser1 * 100 + ser2 * 10);
+		Serial.print(ser1);Serial.print(ser2);Serial.print(":");
+		count++;
 	}
-else{
-	
-}
+	else{
+		
+	}
 }
 //d
 void d(void) {//例子:25+D13E 25节点d13号输出高
@@ -187,18 +175,18 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 			Serial.println(digitalRead((unascii((byte)Str[4])*10+unascii((byte)Str[5]))));//这个有响应
 			
 		}
-		}
+	}
 }
-		
-		
-		//过程函数
-		byte ascii(byte pic) {
-			return pic + 48;
-		}
 
-		byte unascii(byte tok) {
-			return tok - 48;
-		}
+
+//过程函数
+byte ascii(byte pic) {
+	return pic + 48;
+}
+
+byte unascii(byte tok) {
+	return tok - 48;
+}
 
 // 		void ask(int detime) {
 // 			if (detime == 1)     delay(ser1 * 100 + ser2 * 10);
@@ -206,41 +194,41 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 // 			Serial.print(ser2);
 // 		}
 
-		void nod(String& Str) {
-			String tempStr = ""; // 声明变量 tempStr，用于临时存储串口输入的数据
-			while (Serial.available()) { // 当串口有数据时，循环执行
-				tempStr += (char)Serial.read();  // 把读取的串口数据，逐个组合到inStr变量里
-			}
-			Str = tempStr; // 把引用指针的变量赋值为 tempStr
-		}
+void nod(String& Str) {
+	String tempStr = ""; // 声明变量 tempStr，用于临时存储串口输入的数据
+	while (Serial.available()) { // 当串口有数据时，循环执行
+		tempStr += (char)Serial.read();  // 把读取的串口数据，逐个组合到inStr变量里
+	}
+	Str = tempStr; // 把引用指针的变量赋值为 tempStr
+}
 
-		// 		void sp(void) {
-		// 			Serial.println("");
-		// 			Serial.println("USE 'HELP' FOR MORE");
-		//
-		// 		}
-		
-		
-		
-		
-		//底层命令
-		
-		
-		
-		void at(void) {//最底层的
-			if ((byte)Str[0] == 'A' && (byte)Str[1] == 'T') {
-				if ((byte)Str[2] == '+') {
-					pps();
-					uart();
-					rst();
-					ch();
-				}
-				if ((byte)Str[2] == '?') {
-					Serial.println("'AT+UART=[N]' IS UART SETTING TOOLS,NUMBER MEAN:300*2^N ");
-					Serial.println("'AT+RST' IS REBOOT COMMAND ");
-				}
-			}
+// 		void sp(void) {
+// 			Serial.println("");
+// 			Serial.println("USE 'HELP' FOR MORE");
+//
+// 		}
+
+
+
+
+//底层命令
+
+
+
+void at(void) {//最底层的
+	if ((byte)Str[0] == 'A' && (byte)Str[1] == 'T') {
+		if ((byte)Str[2] == '+') {
+			pps();
+			uart();
+			rst();
+			ch();
 		}
+		if ((byte)Str[2] == '?') {
+			Serial.println("'AT+UART=[N]' IS UART SETTING TOOLS,NUMBER MEAN:300*2^N ");
+			Serial.println("'AT+RST' IS REBOOT COMMAND ");
+		}
+	}
+}
 
 // 		void ac(void) {
 // 		 if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
@@ -252,32 +240,32 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 
 
 
-		void ins(void) {//机器码+
-			if ((byte)Str[0] == '?') {//轮询
-				ack();
-			}
-			if ((byte)Str[0] == ascii(ser1) && (byte)Str[1] == ascii(ser2)) {
-// 				if ((byte)Str[2] == '?') {
-// 					ack();
-// 					Serial.println(" STAND BY");
-// 				}
-				if ((byte)Str[2] == '+') {
-				/*	ex();*/
-					pps();
-					rst();
-					uart();
-				/*	re();*/
-					d();
-				}
-			}
+void ins(void) {//机器码+
+	if ((byte)Str[0] == '?') {//轮询
+		ack();
+	}
+	if ((byte)Str[0] == ascii(ser1) && (byte)Str[1] == ascii(ser2)) {
+		// 				if ((byte)Str[2] == '?') {
+		// 					ack();
+		// 					Serial.println(" STAND BY");
+		// 				}
+		if ((byte)Str[2] == '+') {
+			/*	ex();*/
+			pps();
+			rst();
+			uart();
+			/*	re();*/
+			d();
 		}
+	}
+}
 
-		void help(void) {
-			if ((byte)Str[0] == 'H' && (byte)Str[1] == 'E' && (byte)Str[2] == 'L' && (byte)Str[3] == 'P')
-			{
-				//    if (acmode==0)
-				Serial.println("AT+UART ; AT+RST ; []+AC ; ? ; AC");
-				//    else
-				Serial.println("[]? ; []+RST ; []+EXIT ; []+SHOW");
-			}
-		}
+void help(void) {
+	if ((byte)Str[0] == 'H' && (byte)Str[1] == 'E' && (byte)Str[2] == 'L' && (byte)Str[3] == 'P')
+	{
+		//    if (acmode==0)
+		Serial.println("AT+UART ; AT+RST ; []+AC ; ? ; AC");
+		//    else
+		Serial.println("[]? ; []+RST ; []+EXIT ; []+SHOW");
+	}
+}
