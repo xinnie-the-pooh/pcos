@@ -1,4 +1,12 @@
-#define btm 300
+#define btm 300  //串口倍率
+
+#ifdef __AVR_ATmega2560__  //引脚数量
+#define dpinsnum 53
+#define apinsnum 15
+#define pwmse 1
+
+#endif
+
 #include <EEPROM.h>
 String Str;
 //byte mul_1 = 1;
@@ -16,30 +24,33 @@ byte acmode;
 byte nm;//write
 void(* resetFunc) (void) = 0;
 void setup(void)
-{
+{   
+	if (ser1!=255&&ser2!=255)newflag=1;
 	acmode = 0;
 	//  editmode = 0;
-	ser0 = EEPROM.read(0);
+	//0-20保留给状态
+	ser0 = EEPROM.read(0);//
 	ser1 = EEPROM.read(1);
 	ser2 = EEPROM.read(2);
 	
 	if (ser0!=255) sped=btm *pow(2,ser0);//存储器非空装入波特率
 	Serial.begin(sped);
 	Serial.print("LOAD UART PROFILE DONE @"); Serial.println(sped);
-	if (ser1!=255&&ser2!=255)newflag=1;
-	if(newflag==1){
+	
+	if(newflag==1){//读取机器码
 	ack();
-	Serial.print(ser1);Serial.print(ser2);
 	Serial.println(" : AC MODE ON");
 	acmode = 1;
+	for (int p=0;p<=dpinsnum;p++)
+	{
+		pinMode(p,EEPROM.read(p+20));//引脚配置方法 从20-100
+	}
+	
 	}
 	
 	else Serial.println("AC MODE FAILED");
 	delay(1000);
 
-
-
-	pinMode(13,1);
 }
 
 // Add the main program code into the continuous loop() function
@@ -69,9 +80,9 @@ void loop(void)
 //show
 void pps(void){
 	if ((byte)Str[3] == 'S' && (byte)Str[4] == 'H' && (byte)Str[5] == 'O' && (byte)Str[6] == 'W') {
-		
+		ack();
 		Serial.print(ser0);Serial.print(";"); Serial.print(ser1);Serial.print(";"); Serial.print(ser2);Serial.println(";");
-		Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");
+	/*	Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");*/
 		
 	}
 }
@@ -153,7 +164,7 @@ void uart(void) {
 void ack(void){//统计响应次数及相应顺延
 if (newflag == 1)   {  
 	delay(ser1 * 100 + ser2 * 10);
-	Serial.print(ser1);Serial.print(ser2);
+	Serial.print(ser1);Serial.print(ser2);Serial.print(":");
 	count++;
 	}
 else{
@@ -173,7 +184,7 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 		
 		if ((byte)Str[6]== "R") {
 			ack();
-			Serial.println(digitalRead((unascii((byte)Str[4])*10+unascii((byte)Str[5]))));
+			Serial.println(digitalRead((unascii((byte)Str[4])*10+unascii((byte)Str[5]))));//这个有响应
 			
 		}
 		}
@@ -216,12 +227,13 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 		
 		
 		
-		void at(void) {
+		void at(void) {//最底层的
 			if ((byte)Str[0] == 'A' && (byte)Str[1] == 'T') {
 				if ((byte)Str[2] == '+') {
 					pps();
 					uart();
 					rst();
+					ch();
 				}
 				if ((byte)Str[2] == '?') {
 					Serial.println("'AT+UART=[N]' IS UART SETTING TOOLS,NUMBER MEAN:300*2^N ");
@@ -230,25 +242,25 @@ void d(void) {//例子:25+D13E 25节点d13号输出高
 			}
 		}
 
-		//void ac(void) {
-		//  if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
-		//    ask(1);
-		//    Serial.println("AC MODE ON");
-		//    acmode = 1;
-		//  }
-		//}
+// 		void ac(void) {
+// 		 if ((byte)Str[0] == 'A' && (byte)Str[1] == 'C') {
+// 	    ask(1);
+// 		   Serial.println("AC MODE ON");
+// 		   acmode = 1;
+// 		 }
+// 		}
 
 
 
-		void ins(void) {
-			if ((byte)Str[0] == '?') {
-				/*ask(1);*/
+		void ins(void) {//机器码+
+			if ((byte)Str[0] == '?') {//轮询
+				ack();
 			}
 			if ((byte)Str[0] == ascii(ser1) && (byte)Str[1] == ascii(ser2)) {
-				if ((byte)Str[2] == '?') {
-					ack();
-					Serial.println(" STAND BY");
-				}
+// 				if ((byte)Str[2] == '?') {
+// 					ack();
+// 					Serial.println(" STAND BY");
+// 				}
 				if ((byte)Str[2] == '+') {
 				/*	ex();*/
 					pps();
