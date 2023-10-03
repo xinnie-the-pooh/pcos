@@ -5,12 +5,14 @@ String Str;
 //byte mul_2 = 2;
 //byte at_flag = 0;
 int sped = 9600; //defalut
+byte count;
 //int config = SERIAL_8N1;
 byte ser0;//read
 byte ser1;
 byte ser2;
+byte newflag;
 byte acmode;
-//int editmode;
+/*int editmode;*/
 byte nm;//write
 void(* resetFunc) (void) = 0;
 void setup(void)
@@ -24,11 +26,14 @@ void setup(void)
 	if (ser0!=255) sped=btm *pow(2,ser0);//存储器非空装入波特率
 	Serial.begin(sped);
 	Serial.print("LOAD UART PROFILE DONE @"); Serial.println(sped);
-	if (ser1!=255&&ser2!=255){
-		Serial.print(ser1);Serial.print(ser2);
-		Serial.println(" : AC MODE ON");
-		acmode = 1;
+	if (ser1!=255&&ser2!=255)newflag=1;
+	if(newflag==1){
+	ack();
+	Serial.print(ser1);Serial.print(ser2);
+	Serial.println(" : AC MODE ON");
+	acmode = 1;
 	}
+	
 	else Serial.println("AC MODE FAILED");
 	delay(1000);
 
@@ -64,8 +69,10 @@ void loop(void)
 //show
 void pps(void){
 	if ((byte)Str[3] == 'S' && (byte)Str[4] == 'H' && (byte)Str[5] == 'O' && (byte)Str[6] == 'W') {
+		
 		Serial.print(ser0);Serial.print(";"); Serial.print(ser1);Serial.print(";"); Serial.print(ser2);Serial.println(";");
 		Serial.println("UART SPEED ; ADDR HIGH ; ADDR LOW");
+		
 	}
 }
 
@@ -143,8 +150,18 @@ void uart(void) {
 	}
 }
 //无响应内部命令
+void ack(void){//统计响应次数及相应顺延
+if (newflag == 1)   {  
+	delay(ser1 * 100 + ser2 * 10);
+	Serial.print(ser1);Serial.print(ser2);
+	count++;
+	}
+else{
+	
+}
+}
 //d
-void d(void) {
+void d(void) {//例子:25+D13E 25节点d13号输出高
 	if ( (byte)Str[3] == 'D'  && (byte)Str[4] != ""&& (byte)Str[5]!= "" ) {
 		if ((byte)Str[6]== 'E')  {
 			digitalWrite((unascii((byte)Str[4])*10+unascii((byte)Str[5])),1);
@@ -154,11 +171,13 @@ void d(void) {
 			digitalWrite((unascii((byte)Str[4])*10+unascii((byte)Str[5])),0);
 		}
 		
-		if ((byte)Str[6]== "") {
+		if ((byte)Str[6]== "R") {
+			ack();
+			Serial.println(digitalRead((unascii((byte)Str[4])*10+unascii((byte)Str[5]))));
 			
-			
-			
-		}}}
+		}
+		}
+}
 		
 		
 		//过程函数
@@ -170,11 +189,11 @@ void d(void) {
 			return tok - 48;
 		}
 
-		void ask(int detime) {
-			if (detime == 1)     delay(ser1 * 100 + ser2 * 10);
-			Serial.print(ser1);
-			Serial.print(ser2);
-		}
+// 		void ask(int detime) {
+// 			if (detime == 1)     delay(ser1 * 100 + ser2 * 10);
+// 			Serial.print(ser1);
+// 			Serial.print(ser2);
+// 		}
 
 		void nod(String& Str) {
 			String tempStr = ""; // 声明变量 tempStr，用于临时存储串口输入的数据
@@ -189,7 +208,14 @@ void d(void) {
 		// 			Serial.println("USE 'HELP' FOR MORE");
 		//
 		// 		}
-		//
+		
+		
+		
+		
+		//底层命令
+		
+		
+		
 		void at(void) {
 			if ((byte)Str[0] == 'A' && (byte)Str[1] == 'T') {
 				if ((byte)Str[2] == '+') {
@@ -216,19 +242,19 @@ void d(void) {
 
 		void ins(void) {
 			if ((byte)Str[0] == '?') {
-				ask(1);
+				/*ask(1);*/
 			}
 			if ((byte)Str[0] == ascii(ser1) && (byte)Str[1] == ascii(ser2)) {
 				if ((byte)Str[2] == '?') {
-					ask(0);
+					ack();
 					Serial.println(" STAND BY");
 				}
 				if ((byte)Str[2] == '+') {
-					ex();
+				/*	ex();*/
 					pps();
 					rst();
 					uart();
-					re();
+				/*	re();*/
 					d();
 				}
 			}
