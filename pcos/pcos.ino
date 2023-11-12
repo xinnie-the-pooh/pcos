@@ -48,8 +48,8 @@ void loop(void)
 	if (Str != "") {
 		Serial.print("INPUT->"); Serial.println(Str);//回显
 		//未激活地址码可用命令:at模式:串口\地址\重启\展示\帮助,
-		if (acmode == 0)at();
-		if (acmode == 1)ins();
+		if (acmode == 0)at;
+		if (acmode == 1)ins;
 		help;//全局放在外边
 	}
 	/*	delay(100); // 延时 100 毫秒,这个时延在存在双状态周期时不需要*/
