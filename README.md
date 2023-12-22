@@ -1,16 +1,5 @@
-# pcos
-mcu uart parallel comunacate system
+This is the issue of my  {programable DC power supply }
 
-单片机并发串口通信系统
+2023-12-20now all hardware all build done;thanks to klxsb's psu.
 
--2023.1受到启发开始搞
-
--2023.3万恶的韩浩弃坑了
-
--2023.6一直没弄完,从假想开始都他妈快一年了,总不至于不弄,还是挺有意思的,最近再次受到启发
-
--2023.7预计作为中间件用于电阻程控器,(参见原新风控制)电源使用统一调制附件.
-
--2023.9基本框架完成,在d13可以测试输出,实用命令有好几条 [SHOW;UART;RST;AC;D]  eeprom用途很大 预计下一步加入默认状态及可执行代码段
-
--10.3 修正结构
+2023-12-22 now software buuilding... use this branch i know it's not perfect.
