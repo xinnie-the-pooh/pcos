@@ -11,7 +11,7 @@ mcu uart parallel comunacate system
 参数	一般返回
 (无)	Agilent Technologies,33522B,XXXXXXXXXX,0.179-1.19-8.88-52-00
 返回仪器的标识字符串：
-*IDN?
+#  *IDN?
 标识字符串包含四个用逗号分隔的字段：
 制造商名称
 型号
@@ -40,27 +40,10 @@ DD
 EE
 
 = PCBA 版本
+# *RST
+将仪器重置为典型或安全的预定义值。 在重置状态中介绍此类设置。
 
-33600 系列仪器的标识字符串采用以下格式：
-
-Agilent Technologies,[型号],[序列号],A.aa.aa-B.bb-CC-DD-EE
-
-A.aa.aa
-
-= 固件版本
-
-B.bb
-
-= 前面板固件版本
-
-CC
-
-= 主板版本
-
-DD
-
-= FPGA 版本
-
-EE
-
-= PCBA 版本
+参数	典型返回
+（无）	（无）
+重置仪器：*RST
+*RST 强制执行 ABORt 命令。该命令将取消当前正在执行的测量或瞬变。这将在“操作状态”寄存器中重置 WTG-meas、MEAS-active、WTG-tran 和 TRAN-active 位。
